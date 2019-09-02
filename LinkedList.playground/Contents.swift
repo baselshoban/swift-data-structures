@@ -71,8 +71,11 @@ class LinkedList<T> {
     }
     
     // MARK: - Deleting elements
-    func pop() {
+    func pop() -> T? {
+        let element = head
         head = head?.next
+        element?.next = nil
+        return element?.data
     }
     
     
@@ -101,6 +104,41 @@ extension LinkedList {
     
 }
 
+
+// MARK: - Queue
+class Queue<T> {
+    var elements: LinkedList<T>
+    
+    init() {
+        elements = LinkedList<T>()
+    }
+    
+    func enqueue(element: T) {
+        elements.append(element: element)
+    }
+    
+    func dequeue() -> T? {
+        return elements.pop()
+    }
+}
+
+// MARK: - Stack
+class Stack<T> {
+    var elements: LinkedList<T>
+    
+    init() {
+        elements = LinkedList<T>()
+    }
+    
+    func push(element: T) {
+        elements.push(element: element)
+    }
+    
+    func pop() -> T? {
+        return elements.pop()
+    }
+}
+
 var list = LinkedList<String>()
 
 list.append(element: "The Head")
@@ -120,3 +158,28 @@ list.remove()
 
 print("\n\nAfter Update:\n")
 list.printList()
+
+print("\nQueue Testing: \n")
+
+var queue = Queue<String>()
+queue.enqueue(element: "(")
+queue.enqueue(element: "5")
+queue.enqueue(element: "*")
+queue.enqueue(element: "10")
+queue.enqueue(element: ")")
+
+for _ in 1...5 {
+    print(queue.dequeue())
+}
+
+print("\nStack Testing: \n")
+var stack = Stack<String>()
+stack.push(element: "(")
+stack.push(element: "5")
+stack.push(element: "*")
+stack.push(element: "10")
+stack.push(element: ")")
+
+for _ in 1...5 {
+    print(stack.pop())
+}
